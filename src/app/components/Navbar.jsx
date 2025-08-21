@@ -20,7 +20,7 @@ export default function Navbar() {
         <Link href="/product" className={isActive("/product")}>Products</Link>
       </li>
       <li>
-        <Link href="/add-product" className={isActive("/add-product")}>Add Product</Link>
+        <Link href="/dashboard" className={isActive("/dashboard")}>Dashboard</Link>
       </li>
     </>
   );
@@ -40,21 +40,29 @@ export default function Navbar() {
       </div>
 
       {/* Right */}
-      <div className="navbar-end gap-2">
+      <div className="navbar-end gap-2 flex items-center">
         {!isSignedIn && (
-          <>
-            <button className="btn" onClick={() => window.Clerk.openSignIn()}>
-              Create Account
-            </button>
-          </>
+          <button className="btn" onClick={() => window.Clerk.openSignIn()}>
+            Create Account
+          </button>
         )}
 
         {isSignedIn && (
           <UserButton
+            userProfileMode="menu"  // Open profile in dropdown menu
+            afterSignOutUrl="/"     // Redirect after sign out
             appearance={{
               elements: {
                 userButtonAvatarBox: "w-10 h-10 rounded-full",
+                userButtonPopover: "bg-white rounded-lg shadow-lg",
               },
+              // Add a custom "Dashboard" item
+              menuItems: [
+                {
+                  label: "Dashboard",
+                  onClick: () => (window.location.href = "/dashboard"),
+                },
+              ],
             }}
           />
         )}
