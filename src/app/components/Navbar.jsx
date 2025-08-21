@@ -26,11 +26,11 @@ export default function Navbar() {
   );
 
   return (
-    <div className="navbar bg-base-100 shadow-sm px-4">
+    <div className="navbar bg-[#e2e7e3]  shadow-sm px-4 sticky top-0 z-50">
       {/* Left */}
       <div className="navbar-start">
-        <Link href="/" className="btn btn-ghost text-xl">
-          Product Store
+        <Link href="/" className="text-xl">
+          Rafsanmart
         </Link>
       </div>
 
@@ -42,7 +42,7 @@ export default function Navbar() {
       {/* Right */}
       <div className="navbar-end gap-2 flex items-center">
         {!isSignedIn && (
-          <button className="btn" onClick={() => window.Clerk.openSignIn()}>
+          <button className="btn btn-outline rounded-2xl" onClick={() => window.Clerk.openSignIn()}>
             Create Account
           </button>
         )}
