@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js E-Commerce Website
+
+Live Demo: [https://next-auth-e1.vercel.app/](https://next-auth-e1.vercel.app/)
+
+This is a modern **Next.js e-commerce website** built using the latest Next.js features. The project leverages **DaisyUI** for beautiful and responsive UI components, **React Hot Toast** for notifications, and **Clerk** for secure user authentication.
+
+---
+
+## Overview
+
+This e-commerce website allows users to:
+
+- Browse products with a clean, responsive design.
+- Register and log in using **Clerk authentication**.
+- Add products to a shopping cart.
+- Receive notifications for actions using **React Hot Toast**.
+- Enjoy a fully responsive design powered by **DaisyUI**.
+
+The application is structured with **Next.js 13+ App Router**, enabling optimized routing, server-side rendering (SSR), and API routes.
+
+---
+
+## Features
+
+- **User Authentication**: Seamless login, signup, and session management using **Clerk**.
+- **Product Listing**: Dynamic product pages fetched from a backend (MongoDB or API).
+- **Shopping Cart**: Add, remove, and view products in the cart.
+- **Notifications**: Real-time feedback for actions using **React Hot Toast**.
+- **Responsive UI**: Built with **Tailwind CSS** and **DaisyUI** for mobile-first design.
+- **Optimized Fonts**: Using **Next.js `next/font`** to load the **Geist** font family.
+
+---
 
 ## Getting Started
 
-First, run the development server:
+Clone the repository and install dependencies:
 
 ```bash
-npm run dev
+git clone <your-repo-url>
+cd <project-folder>
+npm install
 # or
-yarn dev
+yarn install
 # or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+pnpm install
