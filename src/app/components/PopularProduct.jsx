@@ -14,10 +14,10 @@ export default async function PopularProduct() {
       {products.map((product) => (
         <div
           key={product._id}
-          className="bg-white rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden"
+          className="bg-base-100 text-base-100 rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden"
         >
           {/* Product Image */}
-          <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
+          <div className="w-full h-48 bg-base-100 flex items-center justify-center">
             <img
               src={product.image?.[0]}
               alt={product.name}
@@ -27,10 +27,10 @@ export default async function PopularProduct() {
 
           {/* Product Info */}
           <div className="p-4">
-            <h2 className="text-lg font-semibold text-gray-800 truncate">
+            <h2 className="text-lg font-semibold text-base-content truncate">
               {product.name}
             </h2>
-            <p className="text-sm text-gray-500 line-clamp-2">
+            <p className="text-sm text-base-content line-clamp-2">
               {product.description}
             </p>
 
@@ -47,14 +47,14 @@ export default async function PopularProduct() {
             </div>
 
             {/* Brand & Rating */}
-            <div className="mt-3 flex justify-between items-center text-sm text-gray-600">
+            <div className="mt-3 flex justify-between items-center text-sm text-base-content">
               <span>{product.brand}</span>
               <span>⭐ {product.rating}</span>
             </div>
 
             {/* Add to cart button */}
             <Link href={'/product'}>
-              <button className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+              <button className="mt-4 w-full bg-[#021206] text-white py-2 rounded-lg hover:bg-blue-700 transition">
                 view All
               </button>
             </Link>

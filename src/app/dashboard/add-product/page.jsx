@@ -3,8 +3,11 @@
 import ProtectedRoute from '@/ProtectedRoute/ProtectedRoute';
 import React, { useState } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 export default function AddProduct() {
+  const router = useRouter(); // For redirecting after submit
+
   const initialFormState = {
     userId: '',
     name: '',
@@ -85,6 +88,11 @@ export default function AddProduct() {
       if (res.ok) {
         toast.success('Product added successfully!');
         setFormData(initialFormState);
+
+        // Redirect to products page after 1.5s
+        setTimeout(() => {
+          router.push('/product');
+        }, 1500);
       } else {
         const errorData = await res.json();
         toast.error(errorData.message || 'Failed to add product.');
@@ -101,12 +109,12 @@ export default function AddProduct() {
     <ProtectedRoute>
       <Toaster />
       <div className="container mx-auto p-6">
-        <h1 className="text-3xl font-bold mb-6 text-gray-800">Add New Product</h1>
-        <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+        <h1 className="text-3xl font-bold mb-6 text-base-800">Add New Product</h1>
+        <form onSubmit={handleSubmit} className="space-y-6 bg-base-100 p-8 rounded-xl shadow-lg border border-gray-200">
 
           {/* User ID */}
           <div>
-            <label className="block font-medium text-gray-700">User ID (optional)</label>
+            <label className="block font-medium text-base-700">User ID (optional)</label>
             <input
               type="text"
               name="userId"
@@ -119,7 +127,7 @@ export default function AddProduct() {
           {/* Name & Brand */}
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="block font-medium text-gray-700">Product Name *</label>
+              <label className="block font-medium text-base-700">Product Name *</label>
               <input
                 type="text"
                 name="name"
@@ -129,7 +137,7 @@ export default function AddProduct() {
               />
             </div>
             <div>
-              <label className="block font-medium text-gray-700">Brand *</label>
+              <label className="block font-medium text-base-700">Brand *</label>
               <input
                 type="text"
                 name="brand"
@@ -142,7 +150,7 @@ export default function AddProduct() {
 
           {/* Description */}
           <div>
-            <label className="block font-medium text-gray-700">Description</label>
+            <label className="block font-medium text-base-700">Description</label>
             <textarea
               name="description"
               value={formData.description}
@@ -155,7 +163,7 @@ export default function AddProduct() {
           {/* Price & Offer Price */}
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="block font-medium text-gray-700">Price *</label>
+              <label className="block font-medium text-base-700">Price *</label>
               <input
                 type="number"
                 name="price"
@@ -165,7 +173,7 @@ export default function AddProduct() {
               />
             </div>
             <div>
-              <label className="block font-medium text-gray-700">Offer Price</label>
+              <label className="block font-medium text-base-700">Offer Price</label>
               <input
                 type="number"
                 name="offerPrice"
@@ -179,7 +187,7 @@ export default function AddProduct() {
           {/* Stock & SKU */}
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="block font-medium text-gray-700">Stock *</label>
+              <label className="block font-medium text-base-700">Stock *</label>
               <input
                 type="number"
                 name="stock"
@@ -189,7 +197,7 @@ export default function AddProduct() {
               />
             </div>
             <div>
-              <label className="block font-medium text-gray-700">SKU</label>
+              <label className="block font-medium text-base-700">SKU</label>
               <input
                 type="text"
                 name="sku"
@@ -203,7 +211,7 @@ export default function AddProduct() {
           {/* Rating & Review Count */}
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="block font-medium text-gray-700">Rating (0-5)</label>
+              <label className="block font-medium text-base-700">Rating (0-5)</label>
               <input
                 type="number"
                 step="0.1"
@@ -216,7 +224,7 @@ export default function AddProduct() {
               />
             </div>
             <div>
-              <label className="block font-medium text-gray-700">Review Count</label>
+              <label className="block font-medium text-base-700">Review Count</label>
               <input
                 type="number"
                 name="reviewCount"
@@ -230,7 +238,7 @@ export default function AddProduct() {
           {/* Warranty, Connectivity, Battery Life, Weight */}
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="block font-medium text-gray-700">Warranty</label>
+              <label className="block font-medium text-base-700">Warranty</label>
               <input
                 type="text"
                 name="warranty"
@@ -240,7 +248,7 @@ export default function AddProduct() {
               />
             </div>
             <div>
-              <label className="block font-medium text-gray-700">Connectivity</label>
+              <label className="block font-medium text-base-700">Connectivity</label>
               <input
                 type="text"
                 name="connectivity"
@@ -252,7 +260,7 @@ export default function AddProduct() {
           </div>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="block font-medium text-gray-700">Battery Life</label>
+              <label className="block font-medium text-base-700">Battery Life</label>
               <input
                 type="text"
                 name="batteryLife"
@@ -262,7 +270,7 @@ export default function AddProduct() {
               />
             </div>
             <div>
-              <label className="block font-medium text-gray-700">Weight</label>
+              <label className="block font-medium text-base-700">Weight</label>
               <input
                 type="text"
                 name="weight"
@@ -275,7 +283,7 @@ export default function AddProduct() {
 
           {/* Features, Colors, In the Box, Images */}
           <div>
-            <label className="block font-medium text-gray-700">Features (comma separated)</label>
+            <label className="block font-medium text-base-700">Features (comma separated)</label>
             <input
               type="text"
               name="features"
@@ -285,7 +293,7 @@ export default function AddProduct() {
             />
           </div>
           <div>
-            <label className="block font-medium text-gray-700">Colors (comma separated)</label>
+            <label className="block font-medium text-base-700">Colors (comma separated)</label>
             <input
               type="text"
               name="colorOptions"
@@ -295,7 +303,7 @@ export default function AddProduct() {
             />
           </div>
           <div>
-            <label className="block font-medium text-gray-700">In the Box (comma separated)</label>
+            <label className="block font-medium text-base-700">In the Box (comma separated)</label>
             <input
               type="text"
               name="inTheBox"
@@ -305,7 +313,7 @@ export default function AddProduct() {
             />
           </div>
           <div>
-            <label className="block font-medium text-gray-700">Image URLs (comma separated)</label>
+            <label className="block font-medium text-base-700">Image URLs (comma separated)</label>
             <input
               type="text"
               name="image"
@@ -317,7 +325,7 @@ export default function AddProduct() {
 
           {/* Category */}
           <div>
-            <label className="block font-medium text-gray-700">Category</label>
+            <label className="block font-medium text-base-700">Category</label>
             <input
               type="text"
               name="category"
@@ -330,7 +338,7 @@ export default function AddProduct() {
           {/* Dimensions */}
           <div className="grid md:grid-cols-3 gap-4">
             <div>
-              <label className="block font-medium text-gray-700">Length</label>
+              <label className="block font-medium text-base-700">Length</label>
               <input
                 type="text"
                 name="dimensions.length"
@@ -340,7 +348,7 @@ export default function AddProduct() {
               />
             </div>
             <div>
-              <label className="block font-medium text-gray-700">Width</label>
+              <label className="block font-medium text-base-700">Width</label>
               <input
                 type="text"
                 name="dimensions.width"
@@ -350,7 +358,7 @@ export default function AddProduct() {
               />
             </div>
             <div>
-              <label className="block font-medium text-gray-700">Height</label>
+              <label className="block font-medium text-base-700">Height</label>
               <input
                 type="text"
                 name="dimensions.height"
@@ -370,7 +378,7 @@ export default function AddProduct() {
               onChange={handleChange}
               className="checkbox"
             />
-            <span className="ml-2 text-gray-700">Active</span>
+            <span className="ml-2 text-base-700">Active</span>
           </div>
 
           {/* Submit */}

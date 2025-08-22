@@ -25,7 +25,7 @@ export default function Hero2() {
   ];
 
   return (
-    <div className="py-12 bg-gray-50">
+    <div className="py-12 bg-base-100">
       <h2 className="text-3xl font-bold text-center mb-8">Our Creative Showcase</h2>
 
       <div
