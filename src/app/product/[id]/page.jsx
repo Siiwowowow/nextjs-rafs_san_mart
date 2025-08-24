@@ -2,10 +2,15 @@ import dbConnect, { collectionNameObject } from '@/lib/dbConnet';
 import React from 'react'
 import { ObjectId } from 'mongodb';
 import ProductGallery from '../ProductGallery';
+import Link from 'next/link';
 export default async function ProductDetailsPage({params}) {
+    // const  p  =await params;
+    // const productCollection = await dbConnect(collectionNameObject.productCollection);
+    // const product = await productCollection.findOne({ _id: new ObjectId(p.id) });
     const  p  =await params;
-    const productCollection = await dbConnect(collectionNameObject.productCollection);
-    const product = await productCollection.findOne({ _id: new ObjectId(p.id) });
+    const res=await fetch(`http://localhost:3000/api/products/${p.id}
+      `)
+      const product=await res.json()
     if (!product) {
     return <div>Product not found</div>;
   }
@@ -84,9 +89,12 @@ export default async function ProductDetailsPage({params}) {
 
           {/* Actions */}
           <div className="flex items-center mt-10 gap-4 text-base">
-            <button className="w-full py-3.5 font-medium bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition">
+            <Link href={`/checkout/${product._id}`}>
+<button className="w-full py-3.5 font-medium bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition">
               Add to Cart
             </button>
+            </Link>
+            
             <button className="w-full py-3.5 font-medium bg-indigo-500 text-white hover:bg-indigo-600 transition">
               Buy now
             </button>

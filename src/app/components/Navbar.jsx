@@ -8,7 +8,9 @@ import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { isSignedIn } = useUser();
+  const { isSignedIn, user } = useUser();
+  const userEmail = user?.primaryEmailAddress?.emailAddress;
+
   const [theme, setTheme] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("theme") || "light";
@@ -16,14 +18,38 @@ export default function Navbar() {
     return "light";
   });
 
+  const [cartCount, setCartCount] = useState(0);
+
+  // Fetch cart count
+  const fetchCartCount = async () => {
+    if (!userEmail) return;
+    try {
+      const res = await fetch(`/api/cart?email=${userEmail}`);
+      const data = await res.json();
+      if (data.success) setCartCount(data.items.length);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
+  useEffect(() => {
+    fetchCartCount();
+
+    // ✅ Listen for cart updates
+    const updateListener = () => fetchCartCount();
+    window.addEventListener("cartUpdated", updateListener);
+
+    return () => {
+      window.removeEventListener("cartUpdated", updateListener);
+    };
+  }, [userEmail]);
+
+  const toggleTheme = () => setTheme(prev => (prev === "light" ? "dark" : "light"));
 
   const isActive = (href) =>
     pathname === href
@@ -32,82 +58,50 @@ export default function Navbar() {
 
   const links = (
     <>
-      <li>
-        <Link href="/" className={isActive("/")}>
-          Home
-        </Link>
-      </li>
-      <li>
-        <Link href="/product" className={isActive("/product")}>
-          Products
-        </Link>
-      </li>
-      <li>
-        <Link href="/dashboard" className={isActive("/dashboard")}>
-          Dashboard
-        </Link>
-      </li>
-      {/* ✅ Add theme toggle inside mobile menu */}
-      <li className="lg:hidden">
-        <Toggle checked={theme === "light"} onChange={toggleTheme} />
-      </li>
+      <li><Link href="/" className={isActive("/")}>Home</Link></li>
+      <li><Link href="/product" className={isActive("/product")}>Products</Link></li>
+      <li><Link href="/dashboard" className={isActive("/dashboard")}>Dashboard</Link></li>
+      <li className="lg:hidden"><Toggle checked={theme === "light"} onChange={toggleTheme} /></li>
     </>
   );
 
   return (
     <div className="navbar bg-base-100 text-base-content shadow-sm px-4 sticky top-0 z-50">
-      {/* Left */}
       <div className="navbar-start">
-        {/* Mobile menu */}
         <div className="dropdown lg:hidden -ml-4">
           <label tabIndex={0} className="btn btn-ghost text-base-content">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </label>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-          >
+          <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
             {links}
           </ul>
         </div>
-
-        <Link href="/" className="text-xl font-bold">
-          Rafsanmart
-        </Link>
+        <Link href="/" className="text-xl font-bold">Rafsanmart</Link>
       </div>
 
-      {/* Center (desktop links) */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 font-bold">{links}</ul>
       </div>
 
-      {/* Right (desktop only) */}
       <div className="navbar-end gap-2 items-center">
-        {/* ✅ Desktop theme toggle */}
         <div className="hidden lg:block mt-1">
           <Toggle checked={theme === "light"} onChange={toggleTheme} />
         </div>
 
+        {/* Cart */}
+        <Link href="/cart" className="btn btn-ghost btn-circle">
+          <div className="indicator">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13l-1.5 6h13l-1.5-6" />
+            </svg>
+            <span className="badge badge-sm indicator-item">{cartCount}</span>
+          </div>
+        </Link>
+
         {!isSignedIn && (
-          <button
-            className="btn btn-outline rounded-2xl"
-            onClick={() => window.Clerk.openSignIn()}
-          >
-            Create Account
-          </button>
+          <button className="btn btn-outline rounded-2xl" onClick={() => window.Clerk.openSignIn()}>Create Account</button>
         )}
 
         {isSignedIn && (
@@ -117,15 +111,9 @@ export default function Navbar() {
             appearance={{
               elements: {
                 userButtonAvatarBox: "w-10 h-10 rounded-full",
-                userButtonPopover:
-                  "bg-base-100 text-base-content rounded-lg shadow-lg",
+                userButtonPopover: "bg-base-100 text-base-content rounded-lg shadow-lg",
               },
-              menuItems: [
-                {
-                  label: "Dashboard",
-                  onClick: () => (window.location.href = "/dashboard"),
-                },
-              ],
+              menuItems: [{ label: "Dashboard", onClick: () => (window.location.href = "/dashboard") }],
             }}
           />
         )}
