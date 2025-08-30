@@ -1,11 +1,12 @@
-import dbConnect, { collectionNameObject } from "@/lib/dbConnet";
+import dbConnect, { collectionNameObject } from "@/lib/dbConnect";
+import { ObjectId } from "mongodb";
 
 // GET cart items by user email
 export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
     const email = searchParams.get("email");
-    const cartCollection = dbConnect(collectionNameObject.cartCollection);
+    const cartCollection = await dbConnect(collectionNameObject.cartCollection);
 
     const items = await cartCollection.find({ userEmail: email }).toArray();
     return Response.json({ success: true, items });
@@ -19,7 +20,7 @@ export async function GET(req) {
 export async function POST(req) {
   try {
     const body = await req.json();
-    const cartCollection = dbConnect(collectionNameObject.cartCollection);
+    const cartCollection = await dbConnect(collectionNameObject.cartCollection);
     const result = await cartCollection.insertOne(body);
     return Response.json({ success: true, data: result });
   } catch (err) {
@@ -32,9 +33,9 @@ export async function POST(req) {
 export async function PATCH(req) {
   try {
     const { id, quantity } = await req.json();
-    const cartCollection = dbConnect(collectionNameObject.cartCollection);
+    const cartCollection = await dbConnect(collectionNameObject.cartCollection);
     const result = await cartCollection.updateOne(
-      { _id: new (require("mongodb").ObjectId)(id) },
+      { _id: new ObjectId(id) },
       { $set: { quantity } }
     );
     return Response.json({ success: true, data: result });
@@ -49,8 +50,8 @@ export async function DELETE(req) {
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
-    const cartCollection = dbConnect(collectionNameObject.cartCollection);
-    const result = await cartCollection.deleteOne({ _id: new (require("mongodb").ObjectId)(id) });
+    const cartCollection = await dbConnect(collectionNameObject.cartCollection);
+    const result = await cartCollection.deleteOne({ _id: new ObjectId(id) });
     return Response.json({ success: true, data: result });
   } catch (err) {
     console.error(err);

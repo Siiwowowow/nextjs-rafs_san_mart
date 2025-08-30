@@ -1,11 +1,11 @@
-import dbConnect, { collectionNameObject } from "@/lib/dbConnet";
+import dbConnect, { collectionNameObject } from "@/lib/dbConnect";
 import Link from "next/link";
 
 // Default items per page
 const ITEMS_PER_PAGE = 8;
 
 export default async function ProductPage({ searchParams }) {
-  const { page = 1, search = "" } = searchParams || {};
+  const { page = 1, search = "" } = await searchParams || {};
   const pageNumber = parseInt(page);
   
   // Connect to MongoDB

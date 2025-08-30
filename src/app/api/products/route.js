@@ -1,4 +1,4 @@
-import dbConnect, { collectionNameObject } from "@/lib/dbConnet";
+import dbConnect, { collectionNameObject } from "@/lib/dbConnect";
 import { NextResponse } from "next/server";
 
 

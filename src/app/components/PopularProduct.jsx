@@ -1,4 +1,5 @@
-import dbConnect, { collectionNameObject } from "@/lib/dbConnet";
+
+import dbConnect, { collectionNameObject } from "@/lib/dbConnect";
 import Link from "next/link";
 
 export default async function PopularProduct() {

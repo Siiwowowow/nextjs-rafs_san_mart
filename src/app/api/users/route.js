@@ -1,4 +1,4 @@
-import dbConnect from "@/lib/dbConnet";
+import dbConnect from "@/lib/dbConnect";
 
 
 export async function POST(req) {

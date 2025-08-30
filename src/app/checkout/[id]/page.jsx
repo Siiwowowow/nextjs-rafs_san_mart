@@ -2,10 +2,8 @@
 import React from "react";
 import AddToCartForm from "./AddToCartForm";
 
-
-
 export default async function Checkout({ params }) {
-  const { id } = params;
+  const { id } = await params;
 
   const res = await fetch(`http://localhost:3000/api/products/${id}`);
   const product = await res.json();
