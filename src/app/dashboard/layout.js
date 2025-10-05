@@ -1,3 +1,11 @@
+// app/dashboard/layout.js
+
+
+import ProtectedRoute from "@/ProtectedRoute/ProtectedRoute";
+import DashboardSidebar from "../components/DashboardSidebar";
+import UserInfo from "../components/UserInfo";
+
+
 export const metadata = {
   title: "Dashboard",
   description: "User dashboard for the product store.",
@@ -5,15 +13,16 @@ export const metadata = {
 
 export default function DashboardLayout({ children }) {
   return (
-    <div className="flex">
-      {/* The sidebar component for dashboard navigation */}
-     
+   <ProtectedRoute>
+        <div className="flex">
+        <UserInfo />
+        <DashboardSidebar />
+        <main className="flex-1 p-6 bg-base-100 min-h-screen">{children}</main>
+      </div>
+   </ProtectedRoute>
+    
+   
       
-      
-      {/* The main content area for dashboard pages */}
-      <main className="flex-1 p-6 bg-base-100">
-        {children}
-      </main>
-    </div>
+    
   );
 }

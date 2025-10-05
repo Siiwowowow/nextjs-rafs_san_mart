@@ -4,6 +4,7 @@ export const collectionNameObject = {
   productCollection: "products",
   userCollection: "users",
   cartCollection: "cart",
+  chatCollection: "chats",
 };
 
 let client = null;
@@ -13,15 +14,9 @@ async function getClient() {
     if (!process.env.NEXT_PUBLIC_MONGO_URI) {
       throw new Error("MongoDB URI is not configured");
     }
-    
     client = new MongoClient(process.env.NEXT_PUBLIC_MONGO_URI, {
-      serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-      },
+      serverApi: { version: ServerApiVersion.v1, strict: true, deprecationErrors: true },
     });
-    
     await client.connect();
   }
   return client;
