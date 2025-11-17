@@ -5,6 +5,7 @@ export const collectionNameObject = {
   userCollection: "users",
   cartCollection: "cart",
   chatCollection: "chats",
+  paymentCollection: "payments",
 };
 
 let client = null;

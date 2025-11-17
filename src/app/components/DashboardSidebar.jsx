@@ -12,7 +12,8 @@ import {
   FaChartBar,
   FaTags,
   FaStore,
-} from "react-icons/fa";
+  FaHome,
+    } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 
@@ -60,6 +61,7 @@ const DashboardSidebar = () => {
     {
       role: "admin",
       items: [
+        { href: "/", label: "Home", icon: <FaHome /> },
         { href: "/dashboard/admin", label: "Admin", icon: <FaUsers /> },
         { href: "/dashboard/admin/overview", label: "Overview", icon: <FaChartBar /> },
         { href: "/dashboard/admin/users", label: "Manage Users", icon: <FaUsers /> },
@@ -70,6 +72,7 @@ const DashboardSidebar = () => {
     {
       role: "seller",
       items: [
+        { href: "/", label: "Home", icon: <FaHome /> },
         { href: "/dashboard/seller", label: "Seller", icon: <FaBoxOpen /> },
         { href: "/dashboard/seller/overview", label: "Overview", icon: <FaChartBar /> },
         { href: "/dashboard/seller/products", label: "My Products", icon: <FaBoxOpen /> },
@@ -80,6 +83,7 @@ const DashboardSidebar = () => {
     {
       role: "user",
       items: [
+        { href: "/", label: "Home", icon: <FaHome /> },
         { href: "/dashboard/user", label: "User", icon: <FaUser /> },
         { href: "/dashboard/user/profile", label: "My Profile", icon: <FaUser /> },
         { href: "/dashboard/user/orders", label: "My Orders", icon: <FaShoppingCart /> },

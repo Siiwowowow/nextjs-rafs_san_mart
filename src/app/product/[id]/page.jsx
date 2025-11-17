@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import BuyNowButton from '@/app/components/BuyNowButton'
+import ProtectedRoute from '@/ProtectedRoute/ProtectedRoute'
 
 export default function Detailspage() {
   const [product, setProduct] = useState(null)
@@ -113,8 +114,10 @@ export default function Detailspage() {
                   Add to Cart
                 </button>
               </Link>
-
+           <ProtectedRoute>
               <BuyNowButton product={product} />
+           </ProtectedRoute>
+              
             </div>
           </div>
         </div>
